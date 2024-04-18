@@ -9,13 +9,21 @@ public class AgentMover : MonoBehaviour
     [SerializeField]
     private float maxSpeed = 0.1f, acceleration = 0.05f, decelleration = 10f;
 
+    private SpriteRenderer spriteRenderer;
+
     [SerializeField]
     private float currentSpeed = 0;
     private Vector2 oldMovementInput;
     public Vector2 currentMovementInput { get; set; }
 
+    private void Start()
+    {
+        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+    }
+
     private void FixedUpdate()
     {
+        // Move the enemy based on the current movement input
         if (currentMovementInput.magnitude > 0 && currentSpeed >= 0)
         {
             oldMovementInput = currentMovementInput;
@@ -27,6 +35,16 @@ public class AgentMover : MonoBehaviour
         }
         currentSpeed = Mathf.Clamp(currentSpeed, 0, maxSpeed);
         rb.velocity = oldMovementInput * currentSpeed;
+
+        // Flip the enemy's sprite if it moving to the left
+        if (rb.velocity.x < 0)
+        {
+            spriteRenderer.flipX = true;
+        }
+        else
+        {
+            spriteRenderer.flipX = false;
+        }
     }
 
 }

@@ -23,7 +23,6 @@ public class EnemyAI : MonoBehaviour
     private ContextBehavior movementDirectionSolver;
 
     private Agent agent;
-
     private Animator animator;
 
     bool isFollowing = false;
@@ -51,6 +50,9 @@ public class EnemyAI : MonoBehaviour
 
     private void Update()
     {
+
+
+
         if (aiData.currentTarget != null)
         {
             if (isFollowing == false)
@@ -63,8 +65,6 @@ public class EnemyAI : MonoBehaviour
         {
             aiData.currentTarget = aiData.targets[0];
         }
-
-        //movementInput = movementDirectionSolver.GetDirectionToMove(steeringBehaviors, aiData);
     }
 
     private IEnumerator Chase()
