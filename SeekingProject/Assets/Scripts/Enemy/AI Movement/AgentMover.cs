@@ -16,6 +16,8 @@ public class AgentMover : MonoBehaviour
     private Vector2 oldMovementInput;
     public Vector2 currentMovementInput { get; set; }
 
+    private float lastVelocity = 0f;
+
     private void Start()
     {
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
@@ -37,7 +39,11 @@ public class AgentMover : MonoBehaviour
         rb.velocity = oldMovementInput * currentSpeed;
 
         // Flip the enemy's sprite if it moving to the left
-        if (rb.velocity.x < 0)
+        if (rb.velocity.x != 0)
+        {
+            lastVelocity = rb.velocity.x;
+        }
+        if (lastVelocity< 0)
         {
             spriteRenderer.flipX = true;
         }

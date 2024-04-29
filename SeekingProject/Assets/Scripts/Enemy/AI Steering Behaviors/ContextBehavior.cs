@@ -24,11 +24,11 @@ public class ContextBehavior : MonoBehaviour
         float[] interest = new float[8];
 
         // Loop through each behavior
-        // ** I don't fully understand why this is run both in the EnemyAI class as well as this class
         foreach (SteeringBehavior behavior in behaviors)
         {
             (danger, interest) = behavior.GetSteering(danger, interest, aiData);
         }
+
 
         // Subtract danger value from interest array
         // This is how we heuristically decide which directions are not plausible for movement
