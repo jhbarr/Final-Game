@@ -30,6 +30,11 @@ public class Max_Script : MonoBehaviour
     public float biteCounter { get; private set; }
     public float biteCdCount { get; private set; }
 
+    // Variables necessary for the attack funcitonality
+    public Transform attackPoint;
+    public float attackRange = 1f;
+    public LayerMask enemyLayerMask;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -129,9 +134,8 @@ public class Max_Script : MonoBehaviour
 
             if (biteCounter <= 0)
             {
-                animator.SetBool("IsBiting", false);
-
-                biteCdCount = biteCooldown;
+                // -------Attack functionality--------
+                attack();
             }
         }
 
@@ -140,5 +144,21 @@ public class Max_Script : MonoBehaviour
             biteCdCount -= Time.deltaTime;
         }
 
+    }
+
+    private void attack()
+    {
+        // Play attack animation
+        animator.SetBool("IsBiting", false);
+        biteCdCount = biteCooldown;
+
+        // Detect enemies within range of the attack
+        Collider2D[] enemiesHit = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayerMask);
+
+        // Damage those enemies
+        foreach (Collider2D collider in enemiesHit)
+        {
+            collider.GetComponent<AgentHealth>().takeDamage(10);
+        }
     }
 }
