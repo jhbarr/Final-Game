@@ -28,6 +28,16 @@ public class EnemyAI : MonoBehaviour
     private Agent agent;
     private Animator animator;
 
+
+    public float attackCooldown;
+    public float attackCdCount { get; private set; }
+
+
+    public Transform attackPoint;
+    public float attackRange = 1f;
+    public LayerMask playerLayerMask;
+
+
     private void Awake()
     {
         agent = GetComponent<Agent>();
@@ -147,10 +157,29 @@ public class EnemyAI : MonoBehaviour
         }
         else
         {
-            animator.SetTrigger("attack");
-            yield return new WaitForSeconds(0.5f);
-            StartCoroutine(Attack());
-            //animator.ResetTrigger("attack");
+            //if (attackCdCount > 0)
+            //{
+            //    attackCdCount -= Time.deltaTime;
+            //}
+            //else
+            //{
+            //    attackCdCount = attackCooldown;
+
+                Collider2D[] enemiesHit = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, playerLayerMask);
+
+                foreach (Collider2D collider in enemiesHit)
+                {
+                    collider.GetComponent<PlayerHealth>().takeDamage(1);
+                }
+
+                animator.SetTrigger("attack");
+                yield return new WaitForSeconds(0.5f);
+
+
+
+                StartCoroutine(Attack());
+                //animator.ResetTrigger("attack");
+            //}
         }
     }
 }
