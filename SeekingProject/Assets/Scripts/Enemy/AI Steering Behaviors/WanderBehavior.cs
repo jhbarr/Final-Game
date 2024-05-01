@@ -10,13 +10,13 @@ public class WanderBehavior : SteeringBehavior
     private LayerMask obstacleLayerMask;
 
     [SerializeField]
-    private float wanderRadius = 3f, targetReachedThreshhold = 1f;
+    private float wanderRadius = 5f, targetReachedThreshhold = 2f, wanderStrength = 0.75f;
 
     [SerializeField]
     private bool showGizmos = true;
 
     private Vector2 point;
-    private Vector2 currentAngle;
+    private Vector2 desiredDirection;
 
     public override (float[] danger, float[] interest) GetSteering(float[] danger, float[] interest, AIData aiData)
     {
@@ -26,25 +26,27 @@ public class WanderBehavior : SteeringBehavior
             // Until we find a valid point
             while (point == Vector2.zero)
             {
-                currentAngle = (Random.insideUnitCircle * wanderRadius);
-                Vector2 tempPoint = (Vector2)transform.position + currentAngle;
-                Vector2 direction = (tempPoint - (Vector2)transform.position).normalized;
-                RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, wanderRadius, obstacleLayerMask);
+                desiredDirection = (desiredDirection + Random.insideUnitCircle * wanderStrength).normalized;
+                Vector2 desiredPosition = (Vector2)transform.position + (desiredDirection * wanderRadius);
+
+                Vector2 rayDirection = (desiredPosition - (Vector2)transform.position).normalized;
+                RaycastHit2D hit = Physics2D.Raycast(transform.position, rayDirection, wanderRadius, obstacleLayerMask);
 
                 if (hit.collider == null)
                 {
-                    aiData.wanderTarget = tempPoint;
-                    point = tempPoint;  
+                    aiData.wanderTarget = desiredPosition;
+                    point = desiredPosition;  
                 }
                 // Otherwise we need to look for another point
             }
         }
 
         // Check if we can reached the current wander target
-        if (Vector2.Distance(transform.position, aiData.wanderTarget) < targetReachedThreshhold)
+        if (Vector2.Distance(transform.position, aiData.wanderTarget) <= targetReachedThreshhold)
         {
             aiData.wanderTarget = Vector2.zero;
             point = Vector2.zero;
+            desiredDirection = Vector2.zero;
             return (danger, interest);
    
         }

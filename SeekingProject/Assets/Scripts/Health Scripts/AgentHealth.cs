@@ -20,6 +20,6 @@ public class AgentHealth : MonoBehaviour
     {
         currentHealth -= healthLoss;
         healthBar.setHealth(currentHealth);
-        GetComponentInChildren<Animator>().SetTrigger("hurt");
+        GetComponentInChildren<Animator>().SetTrigger("hurtTrigger");
     }
 }

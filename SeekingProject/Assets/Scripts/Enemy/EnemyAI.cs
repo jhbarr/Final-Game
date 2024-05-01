@@ -50,22 +50,44 @@ public class EnemyAI : MonoBehaviour
     }
 
     private void Update()
-    {
+    { 
+        // Check if the enemy shoule be wandering
         if (aiData.currentTarget == null)
         {
+            // Enemy should wander if it isn't already
             if (aiData.isWandering == false)
             {
                 aiData.isWandering = true;
-                animator.SetBool("isFollowing", true);
+                animator.SetBool("isWandering", aiData.isWandering);
+                // Start the coroutine
                 StartCoroutine(Wander());
             }
         }
-        if (aiData.currentTarget != null)
+
+        // Check if the enemy should be attacking
+        // It should attack if the current target is within the attack threshold
+        if (aiData.currentTarget != null && aiData.distanceToTarget <= 1.5f)
         {
+            // Enemy should attack if it isn't already
+            if (aiData.isAttacking == false)
+            {
+                aiData.isAttacking = true;
+                animator.SetBool("isAttacking", aiData.isAttacking);
+                // Start the coroutine
+                StartCoroutine(Attack());
+            }
+        }
+
+        // Check if the enemy should be chasing
+        // It should still be chasing the player if the current target is not within the attack threshold
+        if (aiData.currentTarget != null && aiData.distanceToTarget > 1.5f)
+        {
+            // Enemy should attack
             if (aiData.isFollowing == false)
             {
                 aiData.isFollowing = true;
                 animator.SetBool("isFollowing", aiData.isFollowing);
+                // Start the coroutine
                 StartCoroutine(Chase());
             }
         }
@@ -73,8 +95,40 @@ public class EnemyAI : MonoBehaviour
         {
             aiData.currentTarget = aiData.targets[0];
         }
-        
+
+
+
+        //if (aiData.currentTarget == null)
+        //{
+        //    if (aiData.isWandering == false)
+        //    {
+        //        aiData.isWandering = true;
+        //        animator.SetBool("isFollowing", true);
+        //        StartCoroutine(Wander());
+        //    }
+        //}
+
+        //if (aiData.currentTarget != null)
+        //{
+        //    if (aiData.isFollowing == false)
+        //    {
+        //        aiData.isFollowing = true;
+        //        animator.SetBool("isFollowing", aiData.isFollowing);
+        //        StartCoroutine(Chase());
+        //    }
+        //}
+        //else if (aiData.getTargetCount() > 0)
+        //{
+        //    aiData.currentTarget = aiData.targets[0];
+        //}
+
     }
+
+
+
+
+
+
 
     private IEnumerator Chase()
     {
@@ -83,7 +137,7 @@ public class EnemyAI : MonoBehaviour
             // Stop the agent
             movementInput = Vector2.zero;
             agent.MovementInput = movementInput;
-            aiData.currentTarget = null;
+            aiData.currentTarget = null; // I don't think this is necessary
 
             aiData.isFollowing = false;
             animator.SetBool("isFollowing", aiData.isFollowing);
@@ -98,11 +152,10 @@ public class EnemyAI : MonoBehaviour
                 movementInput = Vector2.zero;
                 agent.MovementInput = movementInput;
 
-                if (aiData.isAttacking == false)
-                {
-                    aiData.isAttacking = true;
-                    StartCoroutine(Attack());
-                }
+                aiData.isFollowing = false;
+                animator.SetBool("isFollowing", aiData.isFollowing);
+
+                aiData.distanceToTarget = distance;
 
                 yield break;
             }
@@ -117,12 +170,16 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
+
+
+
     private IEnumerator Wander()
     {
         if (aiData.currentTarget != null)
         {
             // Make the enemy stop wandering
             aiData.isWandering = false;
+            animator.SetBool("isWandering", aiData.isWandering);
             yield break;
         }
         else
@@ -134,21 +191,24 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
+
+
+
     private IEnumerator Attack()
     {
         float distance = Vector2.Distance(aiData.currentTarget.position, transform.position);
 
         if (distance > 1.5f)
         {
+            aiData.distanceToTarget = float.PositiveInfinity;
+
             aiData.isAttacking = false;
-            aiData.isFollowing = false;
-            animator.SetBool("isFollowing", aiData.isFollowing);
+            animator.SetBool("isAttacking", aiData.isAttacking);
             yield break;
         }
         else
         {
-            animator.SetTrigger("attack");
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(1f);
             StartCoroutine(Attack());
             //animator.ResetTrigger("attack");
         }

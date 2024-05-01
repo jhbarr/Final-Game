@@ -10,6 +10,7 @@ public class AIData : MonoBehaviour
     public Transform currentTarget;
 
     public Vector2 wanderTarget;
+    public float distanceToTarget = float.PositiveInfinity;
 
     public bool isFollowing = false;
     public bool isWandering = false;
