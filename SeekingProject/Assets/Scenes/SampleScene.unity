@@ -2231,6 +2231,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Heart: {fileID: 4430984462795738299, guid: 381e30386ace6459d911553d60aff45b, type: 3}
   max: {fileID: 7441674049135566282}
+  canvas: {fileID: 7979511455752602543}
 --- !u!1 &1673425550
 GameObject:
   m_ObjectHideFlags: 0
