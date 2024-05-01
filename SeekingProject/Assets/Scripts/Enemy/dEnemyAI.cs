@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyAI : MonoBehaviour
+public class dEnemyAI : MonoBehaviour
 { 
     [SerializeField]
     private List<SteeringBehavior> seekSteeringBehaviors;
@@ -28,9 +28,15 @@ public class EnemyAI : MonoBehaviour
     private Agent agent;
     private Animator animator;
 
+
+    public float attackCooldown;
+    public float attackCdCount { get; private set; }
+
+
     public Transform attackPoint;
     public float attackRange = 1f;
     public LayerMask playerLayerMask;
+
 
     private void Awake()
     {
@@ -54,44 +60,22 @@ public class EnemyAI : MonoBehaviour
     }
 
     private void Update()
-    { 
-        // Check if the enemy shoule be wandering
+    {
         if (aiData.currentTarget == null)
         {
-            // Enemy should wander if it isn't already
             if (aiData.isWandering == false)
             {
                 aiData.isWandering = true;
-                animator.SetBool("isWandering", aiData.isWandering);
-                // Start the coroutine
+                animator.SetBool("isFollowing", true);
                 StartCoroutine(Wander());
             }
         }
-
-        // Check if the enemy should be attacking
-        // It should attack if the current target is within the attack threshold
-        if (aiData.currentTarget != null && aiData.distanceToTarget <= 1.5f)
+        if (aiData.currentTarget != null)
         {
-            // Enemy should attack if it isn't already
-            if (aiData.isAttacking == false)
-            {
-                aiData.isAttacking = true;
-                animator.SetBool("isAttacking", aiData.isAttacking);
-                // Start the coroutine
-                StartCoroutine(Attack());
-            }
-        }
-
-        // Check if the enemy should be chasing
-        // It should still be chasing the player if the current target is not within the attack threshold
-        if (aiData.currentTarget != null && aiData.distanceToTarget > 1.5f)
-        {
-            // Enemy should attack
             if (aiData.isFollowing == false)
             {
                 aiData.isFollowing = true;
                 animator.SetBool("isFollowing", aiData.isFollowing);
-                // Start the coroutine
                 StartCoroutine(Chase());
             }
         }
@@ -99,8 +83,8 @@ public class EnemyAI : MonoBehaviour
         {
             aiData.currentTarget = aiData.targets[0];
         }
+        
     }
-
 
     private IEnumerator Chase()
     {
@@ -109,7 +93,7 @@ public class EnemyAI : MonoBehaviour
             // Stop the agent
             movementInput = Vector2.zero;
             agent.MovementInput = movementInput;
-            aiData.currentTarget = null; // I don't think this is necessary
+            aiData.currentTarget = null;
 
             aiData.isFollowing = false;
             animator.SetBool("isFollowing", aiData.isFollowing);
@@ -124,10 +108,11 @@ public class EnemyAI : MonoBehaviour
                 movementInput = Vector2.zero;
                 agent.MovementInput = movementInput;
 
-                aiData.isFollowing = false;
-                animator.SetBool("isFollowing", aiData.isFollowing);
-
-                aiData.distanceToTarget = distance;
+                if (aiData.isAttacking == false)
+                {
+                    aiData.isAttacking = true;
+                    StartCoroutine(Attack());
+                }
 
                 yield break;
             }
@@ -142,16 +127,12 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
-
-
-
     private IEnumerator Wander()
     {
         if (aiData.currentTarget != null)
         {
             // Make the enemy stop wandering
             aiData.isWandering = false;
-            animator.SetBool("isWandering", aiData.isWandering);
             yield break;
         }
         else
@@ -163,19 +144,15 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
-
-
-
     private IEnumerator Attack()
     {
         float distance = Vector2.Distance(aiData.currentTarget.position, transform.position);
 
         if (distance > 1.5f)
         {
-            aiData.distanceToTarget = float.PositiveInfinity;
-
             aiData.isAttacking = false;
-            animator.SetBool("isAttacking", aiData.isAttacking);
+            aiData.isFollowing = false;
+            animator.SetBool("isFollowing", aiData.isFollowing);
             yield break;
         }
         else
@@ -187,7 +164,11 @@ public class EnemyAI : MonoBehaviour
                 collider.GetComponent<PlayerHealth>().takeDamage(1);
             }
 
+            animator.SetTrigger("attack");
             yield return new WaitForSeconds(0.5f);
+
+
+
             StartCoroutine(Attack());
         }
     }

@@ -15,5 +15,7 @@ public class AIData : MonoBehaviour
     public bool isWandering = false;
     public bool isAttacking = false;
 
+    public float distanceToTarget = float.PositiveInfinity;
+
     public int getTargetCount() => targets == null ? 0 : targets.Count;
 }
