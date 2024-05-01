@@ -95,39 +95,7 @@ public class EnemyAI : MonoBehaviour
         {
             aiData.currentTarget = aiData.targets[0];
         }
-
-
-
-        //if (aiData.currentTarget == null)
-        //{
-        //    if (aiData.isWandering == false)
-        //    {
-        //        aiData.isWandering = true;
-        //        animator.SetBool("isFollowing", true);
-        //        StartCoroutine(Wander());
-        //    }
-        //}
-
-        //if (aiData.currentTarget != null)
-        //{
-        //    if (aiData.isFollowing == false)
-        //    {
-        //        aiData.isFollowing = true;
-        //        animator.SetBool("isFollowing", aiData.isFollowing);
-        //        StartCoroutine(Chase());
-        //    }
-        //}
-        //else if (aiData.getTargetCount() > 0)
-        //{
-        //    aiData.currentTarget = aiData.targets[0];
-        //}
-
     }
-
-
-
-
-
 
 
     private IEnumerator Chase()
@@ -210,7 +178,6 @@ public class EnemyAI : MonoBehaviour
         {
             yield return new WaitForSeconds(1f);
             StartCoroutine(Attack());
-            //animator.ResetTrigger("attack");
         }
     }
 }
