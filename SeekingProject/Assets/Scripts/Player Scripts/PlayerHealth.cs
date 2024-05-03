@@ -4,20 +4,60 @@ using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour
 {
+    public Animator animator;
+    public GameObject GameOverScreen;
+
     public readonly int maximumHp = 5;
     public int currentHp;
+
+
+    public float hurtLength;
+    private float hurtCounter;
+
 
     private void Start()
     {
         currentHp = maximumHp;
     }
 
+    public void Update()
+    {
+        if (hurtCounter > 0)
+        {
+            hurtCounter -= Time.deltaTime;
+        }
+        else
+        {
+            animator.SetBool("isHurting", false);
+        }
+    }
+
     public void takeDamage(int n)
     {
-        currentHp -= n;
+        if (hurtCounter <= 0)
+        {
+
+            currentHp -= n;
+            if (currentHp <= 0)
+            {
+                currentHp = 0;
+            }
+
+            animator.SetBool("isHurting", true);
+            hurtCounter = hurtLength;
+        }
+
         if (currentHp <= 0)
         {
-            currentHp = 0;
+            die();
         }
+    }
+
+    public void die()
+    {
+        animator.SetBool("isHurting", false);
+        animator.SetBool("isDead", true);
+
+        GameOverScreen.SetActive(true);
     }
 }
