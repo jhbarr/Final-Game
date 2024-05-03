@@ -85,7 +85,7 @@ public class EnemyAI : MonoBehaviour
 
         // Check if the enemy should be chasing
         // It should still be chasing the player if the current target is not within the attack threshold
-        if (aiData.currentTarget != null && aiData.distanceToTarget > 1.5f)
+        if (aiData.currentTarget != null && aiData.distanceToTarget > 1.5f && !animator.GetBool("hurtTrigger"))
         {
             // Enemy should attack
             if (aiData.isFollowing == false)

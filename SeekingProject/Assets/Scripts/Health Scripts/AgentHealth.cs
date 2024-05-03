@@ -20,6 +20,14 @@ public class AgentHealth : MonoBehaviour
     {
         currentHealth -= healthLoss;
         healthBar.setHealth(currentHealth);
+        StartCoroutine(Hurt());
+    }
+
+    private IEnumerator Hurt()
+    {
         GetComponentInChildren<Animator>().SetTrigger("hurtTrigger");
+        yield break;
     }
 }
+
+
