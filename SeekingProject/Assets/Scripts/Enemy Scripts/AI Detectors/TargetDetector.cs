@@ -15,9 +15,9 @@ public class TargetDetector : Detector
 
     private List<Transform> colliders;
 
-
     public override void Detect(AIData aiData)
     {
+
         // Find if the player is near
         Collider2D playerCollider = Physics2D.OverlapCircle(transform.position, targetDetectionRange, playerLayerMask);
 
@@ -33,28 +33,28 @@ public class TargetDetector : Detector
                 Debug.DrawRay(transform.position, direction * targetDetectionRange, Color.magenta);
                 colliders = new List<Transform>() { playerCollider.transform };
             }
-            else
-            {
-                // Enemy does not see the player
-                colliders = null;
-            }
+        }
+        else
+        {
+            // Enemy does not see the player
+            colliders = null;
         }
         aiData.targets = colliders;
     }
 
-    private void OnDrawGizmosSelected()
-    {
-        if (showGizmos == false)
-            return;
+    //private void OnDrawGizmosSelected()
+    //{
+    //    if (showGizmos == false)
+    //        return;
 
-        Gizmos.DrawWireSphere(transform.position, targetDetectionRange);
+    //    Gizmos.DrawWireSphere(transform.position, targetDetectionRange);
 
-        if (colliders == null)
-            return;
-        Gizmos.color = Color.magenta;
-        foreach (var item in colliders)
-        {
-            Gizmos.DrawSphere(item.position, 0.3f);
-        }
-    }
+    //    if (colliders == null)
+    //        return;
+    //    Gizmos.color = Color.magenta;
+    //    foreach (var item in colliders)
+    //    {
+    //        Gizmos.DrawSphere(item.position, 0.3f);
+    //    }
+    //}
 }

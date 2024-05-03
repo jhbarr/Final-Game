@@ -20,14 +20,23 @@ public class AgentHealth : MonoBehaviour
     {
         currentHealth -= healthLoss;
         healthBar.setHealth(currentHealth);
-        StartCoroutine(Hurt());
+        //StartCoroutine(Hurt());
+        GetComponentInChildren<Animator>().SetTrigger("hurtTrigger");
     }
 
-    private IEnumerator Hurt()
-    {
-        GetComponentInChildren<Animator>().SetTrigger("hurtTrigger");
-        yield break;
-    }
+    //private IEnumerator Hurt()
+    //{
+
+    //    Animator animator = GetComponentInChildren<Animator>();
+    //    animator.SetBool("isAttacking", false);
+    //    animator.SetBool("isFollowing", false);
+    //    animator.SetBool("isWandering", false);
+
+    //    animator.SetTrigger("hurtTrigger");
+
+    //    bool v = animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1;
+    //    yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1);
+    //}
 }
 
 

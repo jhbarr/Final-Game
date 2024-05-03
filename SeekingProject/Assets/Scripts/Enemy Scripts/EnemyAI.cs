@@ -43,7 +43,7 @@ public class EnemyAI : MonoBehaviour
     {
         // Invoke this method every "detectionDelay" seconds
         // The method will detect the player and obstacles around
-        InvokeRepeating("PerformDetection", 0, detectionDelay);
+        // InvokeRepeating("PerformDetection", 0, detectionDelay);
     }
 
     private void PerformDetection()
@@ -55,7 +55,9 @@ public class EnemyAI : MonoBehaviour
     }
 
     private void Update()
-    { 
+    {
+        PerformDetection();
+
         // Check if the enemy shoule be wandering
         if (aiData.currentTarget == null)
         {
@@ -181,16 +183,21 @@ public class EnemyAI : MonoBehaviour
         }
         else
         {
-            Collider2D[] enemiesHit = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, playerLayerMask);
-
-            foreach (Collider2D collider in enemiesHit)
-            {
-                collider.GetComponent<PlayerHealth>().takeDamage(1);
-            }
+            
             yield return new WaitForSeconds(animator.GetCurrentAnimatorClipInfo(0)[0].clip.length);
             StartCoroutine(Attack());
             
            
+        }
+    }
+
+    public void attackDamage()
+    {
+        Collider2D[] enemiesHit = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, playerLayerMask);
+
+        foreach (Collider2D collider in enemiesHit)
+        {
+            collider.GetComponent<PlayerHealth>().takeDamage(1);
         }
     }
 }

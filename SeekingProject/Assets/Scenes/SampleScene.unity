@@ -2229,7 +2229,7 @@ MonoBehaviour:
   movement: {x: 0, y: 0}
   activeMoveSpeed: 0
   jumping: 0
-  jumpSpeed: 15
+  jumpSpeed: 8
   jumpLength: 0.5
   jumpCooldown: 1
   biteLength: 0.5
