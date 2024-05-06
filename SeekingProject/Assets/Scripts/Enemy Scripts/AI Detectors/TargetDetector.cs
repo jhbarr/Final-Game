@@ -13,10 +13,10 @@ public class TargetDetector : Detector
     [SerializeField]
     private bool showGizmos = true;
 
-    private List<Transform> colliders;
-
     public override void Detect(AIData aiData)
     {
+
+        List<Transform> colliders = null;
 
         // Find if the player is near
         Collider2D playerCollider = Physics2D.OverlapCircle(transform.position, targetDetectionRange, playerLayerMask);
@@ -30,14 +30,10 @@ public class TargetDetector : Detector
             // Make sure that the collider we see is on the player layer mask level
             if (hit.collider != null && (playerLayerMask & (1 << hit.collider.gameObject.layer)) != 0)
             {
+                Debug.Log("Something is seen");
                 Debug.DrawRay(transform.position, direction * targetDetectionRange, Color.magenta);
                 colliders = new List<Transform>() { playerCollider.transform };
             }
-        }
-        else
-        {
-            // Enemy does not see the player
-            colliders = null;
         }
         aiData.targets = colliders;
     }

@@ -182,7 +182,7 @@ public class EnemyAI : MonoBehaviour
         }
         else
         {
-            attackDamage();
+            //attackDamage();
             yield return new WaitForSeconds(animator.GetCurrentAnimatorClipInfo(0)[0].clip.length);
             StartCoroutine(Attack());
             
