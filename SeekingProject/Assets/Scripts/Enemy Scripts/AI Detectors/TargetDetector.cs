@@ -30,7 +30,6 @@ public class TargetDetector : Detector
             // Make sure that the collider we see is on the player layer mask level
             if (hit.collider != null && (playerLayerMask & (1 << hit.collider.gameObject.layer)) != 0)
             {
-                Debug.Log("Something is seen");
                 Debug.DrawRay(transform.position, direction * targetDetectionRange, Color.magenta);
                 colliders = new List<Transform>() { playerCollider.transform };
             }
