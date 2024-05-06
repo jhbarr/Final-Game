@@ -6,6 +6,7 @@ public class PlayerHealth : MonoBehaviour
 {
     public Animator animator;
     public GameObject GameOverScreen;
+    public AudioSource ouch;
 
     public readonly int maximumHp = 5;
     public int currentHp;
@@ -13,6 +14,8 @@ public class PlayerHealth : MonoBehaviour
 
     public float hurtLength;
     private float hurtCounter;
+
+    private bool isDead = false;
 
 
     private void Start()
@@ -45,6 +48,11 @@ public class PlayerHealth : MonoBehaviour
 
             animator.SetBool("isHurting", true);
             hurtCounter = hurtLength;
+
+            if (!isDead)
+            {
+                ouch.Play();
+            }
         }
 
         if (currentHp <= 0)
@@ -55,6 +63,7 @@ public class PlayerHealth : MonoBehaviour
 
     public void die()
     {
+        isDead = true;
         animator.SetBool("isHurting", false);
         animator.SetBool("isDead", true);
 

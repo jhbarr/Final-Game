@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class Max_Script : MonoBehaviour
 {
     public float moveSpeed = 5f;
