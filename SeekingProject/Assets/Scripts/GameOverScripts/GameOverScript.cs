@@ -9,30 +9,47 @@ public class GameOverScript : MonoBehaviour
     public Text GameOverText;
     public GameObject RestartButton;
 
+    public float displayDelay;
+    private float displayCounter;
+
     // Update is called once per frame
     void Update()
     {
-        if (GameOverText.color.g < 0.5)
+        if (displayCounter > 0)
         {
-            Color textCol = GameOverText.color;
-            textCol.g += Time.deltaTime / 5;
-
-            GameOverText.color = textCol;
+            displayCounter -= Time.deltaTime;
         }
         else
         {
-            Debug.Log(GameOverText.transform.position.y);
-            if (GameOverText.transform.position.y < 700)
+
+            if (Background.color.a < 1)
             {
-
-                Vector3 textPos = GameOverText.transform.position;
-                textPos.y += Time.deltaTime * 200;
-
-                GameOverText.transform.position = textPos;
+                Color bgCol = Background.color;
+                bgCol.a += Time.deltaTime;
+                Background.color = bgCol;
             }
             else
             {
-                RestartButton.SetActive(true);
+                if (GameOverText.color.g < 0.5)
+                {
+                    Color textCol = GameOverText.color;
+                    textCol.g += Time.deltaTime / 5;
+                    textCol.a = 1;
+                    GameOverText.color = textCol;
+                }
+                else
+                {
+                    if (GameOverText.transform.position.y < 700)
+                    {
+                        Vector3 textPos = GameOverText.transform.position;
+                        textPos.y += Time.deltaTime * 200;
+                        GameOverText.transform.position = textPos;
+                    }
+                    else
+                    {
+                        RestartButton.SetActive(true);
+                    }
+                }
             }
         }
     }
@@ -40,10 +57,15 @@ public class GameOverScript : MonoBehaviour
     private void OnEnable()
     {
         RestartButton.SetActive(false);
+        displayCounter = displayDelay;
 
         Color textCol = GameOverText.color;
         textCol.g = 0;
-
+        textCol.a = 0;
         GameOverText.color = textCol;
+
+        Color bgCol = Background.color;
+        bgCol.a = 0;
+        Background.color = bgCol;
     }
 }

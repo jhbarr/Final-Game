@@ -69,4 +69,9 @@ public class PlayerHealth : MonoBehaviour
 
         GameOverScreen.SetActive(true);
     }
+
+    public void gameOver()
+    {
+        gameObject.SetActive(false);
+    }
 }
