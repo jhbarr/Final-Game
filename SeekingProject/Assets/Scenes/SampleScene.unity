@@ -3893,6 +3893,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBar: {fileID: 2135886898}
+  GameOverScreen: {fileID: 497441999}
+  hurtLength: 1
 --- !u!114 &1945935573
 MonoBehaviour:
   m_ObjectHideFlags: 0

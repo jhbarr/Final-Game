@@ -58,7 +58,7 @@ public class EnemyAI : MonoBehaviour
         PerformDetection();
 
         // Check if the enemy shoule be wandering
-        if (aiData.currentTarget == null)
+        if (aiData.currentTarget == null && !animator.GetBool("isHurting"))
         {
             // Enemy should wander if it isn't already
             if (aiData.isWandering == false)
@@ -72,7 +72,7 @@ public class EnemyAI : MonoBehaviour
 
         // Check if the enemy should be attacking
         // It should attack if the current target is within the attack threshold
-        if (aiData.currentTarget != null && aiData.distanceToTarget <= 1.5f)
+        if (aiData.currentTarget != null && aiData.distanceToTarget <= 1.5f && !animator.GetBool("isHurting"))
         {
             // Enemy should attack if it isn't already
             if (aiData.isAttacking == false)
@@ -86,7 +86,7 @@ public class EnemyAI : MonoBehaviour
 
         // Check if the enemy should be chasing
         // It should still be chasing the player if the current target is not within the attack threshold
-        if (aiData.currentTarget != null && aiData.distanceToTarget > 1.5f && !animator.GetBool("hurtTrigger"))
+        if (aiData.currentTarget != null && aiData.distanceToTarget > 1.5f && !animator.GetBool("isHurting"))
         {
             // Enemy should attack
             if (aiData.isFollowing == false)
@@ -106,7 +106,7 @@ public class EnemyAI : MonoBehaviour
 
     private IEnumerator Chase()
     {
-        if (aiData.currentTarget == null)
+        if (aiData.currentTarget == null || animator.GetBool("isHurting"))
         {
             // Stop the agent
             movementInput = Vector2.zero;

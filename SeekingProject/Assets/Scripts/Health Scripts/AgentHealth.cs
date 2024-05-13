@@ -4,11 +4,17 @@ using UnityEngine;
 
 public class AgentHealth : MonoBehaviour
 {
+    public HealthBar healthBar;
+    public GameObject GameOverScreen;
+
     // Code related to the enemies health
     private int maxHealth = 50;
     private int currentHealth;
 
-    public HealthBar healthBar;
+    public float hurtLength;
+    private float hurtCounter;
+
+    private float healtCounter = 5;
 
     private void Start()
     {
@@ -16,27 +22,57 @@ public class AgentHealth : MonoBehaviour
         healthBar.setMaxHealth(maxHealth);
     }
 
+    private void Update()
+    {
+        
+
+        // Make it so that the stun lasts a certain number of seconds
+        if (hurtCounter > 0)
+        {
+            hurtCounter -= Time.deltaTime;
+        }
+        else
+        {
+            GetComponentInChildren<Animator>().SetBool("isHurting", false);
+        }
+
+        // Slowly regenerate the health over time
+        // Five health points are restored every five seconds
+        if (healtCounter < 0 && currentHealth <= maxHealth)
+        {
+            currentHealth += 5;
+            healthBar.setHealth(currentHealth);
+            healtCounter = 5;
+        }
+        else
+        {
+            healtCounter -= Time.deltaTime;
+        }
+    }
+
+    // Have the enemy take damage
+    // Enemy will run death logic if their heatlh dips below zero
     public void takeDamage(int healthLoss)
     {
         currentHealth -= healthLoss;
         healthBar.setHealth(currentHealth);
-        //StartCoroutine(Hurt());
-        GetComponentInChildren<Animator>().SetTrigger("hurtTrigger");
+
+        if (currentHealth <= 0)
+        {
+            // Death logic
+            // Come back to later
+        }
+
+        else if (hurtCounter <= 0)
+        {
+            if (GetComponentInChildren<Animator>().GetBool("isHurting") == false)
+            {
+                GetComponentInChildren<Animator>().SetBool("isHurting", true);
+            }
+            hurtCounter = hurtLength;
+            healtCounter = 5;
+        }
     }
-
-    //private IEnumerator Hurt()
-    //{
-
-    //    Animator animator = GetComponentInChildren<Animator>();
-    //    animator.SetBool("isAttacking", false);
-    //    animator.SetBool("isFollowing", false);
-    //    animator.SetBool("isWandering", false);
-
-    //    animator.SetTrigger("hurtTrigger");
-
-    //    bool v = animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1;
-    //    yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1);
-    //}
 }
 
 

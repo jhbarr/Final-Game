@@ -159,7 +159,7 @@ public class Max_Script : MonoBehaviour
         // Damage those enemies
         foreach (Collider2D collider in enemiesHit)
         {
-            collider.GetComponent<AgentHealth>().takeDamage(10);
+            collider.GetComponent<AgentHealth>().takeDamage(100);
         }
     }
 }
