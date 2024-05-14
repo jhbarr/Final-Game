@@ -6,6 +6,7 @@ public class AgentHealth : MonoBehaviour
 {
     public HealthBar healthBar;
     public GameObject GameOverScreen;
+    public AIData aiData;
 
     // Code related to the enemies health
     private int maxHealth = 50;
@@ -24,8 +25,6 @@ public class AgentHealth : MonoBehaviour
 
     private void Update()
     {
-        
-
         // Make it so that the stun lasts a certain number of seconds
         if (hurtCounter > 0)
         {
@@ -57,13 +56,7 @@ public class AgentHealth : MonoBehaviour
         currentHealth -= healthLoss;
         healthBar.setHealth(currentHealth);
 
-        if (currentHealth <= 0)
-        {
-            // Death logic
-            // Come back to later
-        }
-
-        else if (hurtCounter <= 0)
+        if (hurtCounter <= 0)
         {
             if (GetComponentInChildren<Animator>().GetBool("isHurting") == false)
             {
@@ -72,6 +65,26 @@ public class AgentHealth : MonoBehaviour
             hurtCounter = hurtLength;
             healtCounter = 5;
         }
+
+        if (currentHealth <= 0)
+        {
+            // Death logic
+            // Come back to later
+            Die();
+        }
+    }
+
+    private void Die()
+    {
+        aiData.isDead = true;
+        GetComponentInChildren<Animator>().SetTrigger("isDead");
+        
+        GameOverScreen.SetActive(true);
+    }
+
+    public void DisableGameObject()
+    {
+        gameObject.SetActive(false);
     }
 }
 

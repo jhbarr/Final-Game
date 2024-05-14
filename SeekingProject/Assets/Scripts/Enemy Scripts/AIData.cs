@@ -14,6 +14,7 @@ public class AIData : MonoBehaviour
     public bool isFollowing = false;
     public bool isWandering = false;
     public bool isAttacking = false;
+    public bool isDead = false;
 
     public float distanceToTarget = float.PositiveInfinity;
 

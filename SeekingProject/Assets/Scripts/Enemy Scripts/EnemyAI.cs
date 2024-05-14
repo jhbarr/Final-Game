@@ -72,7 +72,7 @@ public class EnemyAI : MonoBehaviour
 
         // Check if the enemy should be attacking
         // It should attack if the current target is within the attack threshold
-        if (aiData.currentTarget != null && aiData.distanceToTarget <= 1.5f && !animator.GetBool("isHurting"))
+        if (aiData.currentTarget != null && aiData.distanceToTarget <= 1.5f)
         {
             // Enemy should attack if it isn't already
             if (aiData.isAttacking == false)
@@ -86,7 +86,7 @@ public class EnemyAI : MonoBehaviour
 
         // Check if the enemy should be chasing
         // It should still be chasing the player if the current target is not within the attack threshold
-        if (aiData.currentTarget != null && aiData.distanceToTarget > 1.5f && !animator.GetBool("isHurting"))
+        if (aiData.currentTarget != null && aiData.distanceToTarget > 1.5f && !animator.GetBool("isHurting") && !aiData.isDead)
         {
             // Enemy should attack
             if (aiData.isFollowing == false)

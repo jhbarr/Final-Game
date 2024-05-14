@@ -3849,6 +3849,7 @@ MonoBehaviour:
   isFollowing: 0
   isWandering: 0
   isAttacking: 0
+  isDead: 0
   distanceToTarget: Infinity
 --- !u!114 &1945935570
 MonoBehaviour:
@@ -3894,6 +3895,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthBar: {fileID: 2135886898}
   GameOverScreen: {fileID: 497441999}
+  aiData: {fileID: 1945935568}
   hurtLength: 1
 --- !u!114 &1945935573
 MonoBehaviour:
