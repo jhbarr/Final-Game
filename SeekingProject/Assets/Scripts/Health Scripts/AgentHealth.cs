@@ -8,6 +8,10 @@ public class AgentHealth : MonoBehaviour
     public GameObject GameOverScreen;
     public AIData aiData;
 
+
+    // Items
+    public GameObject SackOfPebbles;
+
     // Code related to the enemies health
     private int maxHealth = 50;
     private int currentHealth;
@@ -16,6 +20,8 @@ public class AgentHealth : MonoBehaviour
     private float hurtCounter;
 
     private float healtCounter = 5;
+
+    private bool dropped = false;
 
     private void Start()
     {
@@ -65,6 +71,14 @@ public class AgentHealth : MonoBehaviour
             hurtCounter = hurtLength;
             healtCounter = 5;
         }
+
+        if (currentHealth <= maxHealth / 2f && !dropped)
+        {
+            GameObject mm = GameObject.Find("MacroManager");
+            mm.GetComponent<MacroManagerScript>().DropItem(gameObject.transform.position, SackOfPebbles);
+            dropped = true;
+        }
+
 
         if (currentHealth <= 0)
         {
