@@ -22,7 +22,7 @@ public class MacroManagerScript : MonoBehaviour
     public void GetItem(GameObject item)
     {
         Debug.Log("Picked up " + item.GetComponent<ItemScript>().ItemName);
-        max.GetComponent<Inventory>().AddItem(item);
+        max.GetComponent<Inventory>().AddItem(item.GetComponent<ItemScript>().ItemName);
         Destroy(item);
     }
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Inventory : MonoBehaviour
 {
-    public List<GameObject> items;
+    public List<string> items;
 
     public GameObject canSack;
     public GameObject canKey;
@@ -21,17 +21,16 @@ public class Inventory : MonoBehaviour
 
     }
 
-    public void AddItem(GameObject item)
+    public void AddItem(string item)
     {
         items.Add(item);
-        string itemName = item.GetComponent<ItemScript>().ItemName;
 
-        if (itemName.Equals("Sack Of Pebbles"))
+        if (item.Equals("Sack Of Pebbles"))
         {
             canSack.SetActive(true);
         }
 
-        if (itemName.Equals("Key"))
+        if (item.Equals("Key"))
         {
             canKey.SetActive(true);
         }
@@ -39,13 +38,28 @@ public class Inventory : MonoBehaviour
 
     public bool Contains(string itemName)
     {
-        foreach (GameObject item in items)
+        foreach (string item in items)
         {
-            if (itemName.Equals(item.name))
+            if (item.Equals(itemName))
             {
                 return true;
             }
         }
         return false;
+    }
+
+    public void removeItem(string name)
+    {
+        items.Remove(name);
+
+        if (name.Equals("Sack Of Pebbles"))
+        {
+            canSack.SetActive(false);
+        }
+
+        if (name.Equals("Key"))
+        {
+            canKey.SetActive(false);
+        }
     }
 }
