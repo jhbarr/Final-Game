@@ -36,4 +36,16 @@ public class Inventory : MonoBehaviour
             canKey.SetActive(true);
         }
     }
+
+    public bool Contains(string itemName)
+    {
+        foreach (GameObject item in items)
+        {
+            if (itemName.Equals(item.name))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 }

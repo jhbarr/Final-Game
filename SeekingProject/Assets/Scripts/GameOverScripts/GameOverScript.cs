@@ -9,6 +9,7 @@ public class GameOverScript : MonoBehaviour
     public Text GameOverText;
     public GameObject RestartButton;
 
+
     public float displayDelay;
     private float displayCounter;
 
@@ -56,6 +57,8 @@ public class GameOverScript : MonoBehaviour
 
     private void OnEnable()
     {
+        GameObject.Find("MacroManager").GetComponent<AudioSource>().Stop();
+
         RestartButton.SetActive(false);
         displayCounter = displayDelay;
 

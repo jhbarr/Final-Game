@@ -9,6 +9,8 @@ public class AgentHealth : MonoBehaviour
     public AIData aiData;
 
 
+    public AudioSource auggg;
+
     // Items
     public GameObject SackOfPebbles;
     public GameObject Key;
@@ -60,6 +62,7 @@ public class AgentHealth : MonoBehaviour
     // Enemy will run death logic if their heatlh dips below zero
     public void takeDamage(int healthLoss)
     {
+        auggg.Play();
         currentHealth -= healthLoss;
         healthBar.setHealth(currentHealth);
 
@@ -80,16 +83,16 @@ public class AgentHealth : MonoBehaviour
             GameObject mm = GameObject.Find("MacroManager");
             MacroManagerScript mms = mm.GetComponent<MacroManagerScript>();
 
-            //if (Random.value > 0.5)
-            //{
+            if (Random.value > 0.5f)
+            {
+                mms.DropItem(gameObject.transform.position, SackOfPebbles);
+            }
+            else
+            {
                 mms.DropItem(gameObject.transform.position, Key);
-            //}
-            //else
-            //{
-            //    mms.DropItem(gameObject.transform.position, Key);
-            //}
+            }
 
-        }
+    }
 
 
         if (currentHealth <= 0)
