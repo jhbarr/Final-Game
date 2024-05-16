@@ -14,14 +14,12 @@ public class MacroManagerScript : MonoBehaviour
 
     public void DropItem(Vector2 pos, GameObject item)
     {
-        Debug.Log("Created " + item.GetComponent<ItemScript>().ItemName);
         GameObject newItem = Instantiate(item);
         newItem.transform.position = pos;
     }
 
     public void GetItem(GameObject item)
     {
-        Debug.Log("Picked up " + item.GetComponent<ItemScript>().ItemName);
         max.GetComponent<Inventory>().AddItem(item.GetComponent<ItemScript>().ItemName);
         Destroy(item);
     }
