@@ -28,7 +28,7 @@ public class CanvasHealthManager : MonoBehaviour
             heartPos.x = Heart.transform.position.x + (128 + 25) * i;
             heartPos += new Vector3(Screen.width / 2, Screen.height / 2, 0);
 
-            Hearts.Push(Instantiate(Heart, heartPos, Heart.transform.rotation, canvas.transform));
+            Hearts.Push(Instantiate(Heart, heartPos, Heart.transform.rotation, transform));
         }
 
 

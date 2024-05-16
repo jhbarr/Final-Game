@@ -11,6 +11,7 @@ public class AgentHealth : MonoBehaviour
 
     // Items
     public GameObject SackOfPebbles;
+    public GameObject Key;
 
     // Code related to the enemies health
     private int maxHealth = 50;
@@ -74,9 +75,20 @@ public class AgentHealth : MonoBehaviour
 
         if (currentHealth <= maxHealth / 2f && !dropped)
         {
-            GameObject mm = GameObject.Find("MacroManager");
-            mm.GetComponent<MacroManagerScript>().DropItem(gameObject.transform.position, SackOfPebbles);
             dropped = true;
+
+            GameObject mm = GameObject.Find("MacroManager");
+            MacroManagerScript mms = mm.GetComponent<MacroManagerScript>();
+
+            //if (Random.value > 0.5)
+            //{
+                mms.DropItem(gameObject.transform.position, Key);
+            //}
+            //else
+            //{
+            //    mms.DropItem(gameObject.transform.position, Key);
+            //}
+
         }
 
 

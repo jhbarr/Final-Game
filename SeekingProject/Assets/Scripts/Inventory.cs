@@ -7,6 +7,7 @@ public class Inventory : MonoBehaviour
     public List<GameObject> items;
 
     public GameObject canSack;
+    public GameObject canKey;
 
     // Start is called before the first frame update
     void Start()
@@ -23,12 +24,16 @@ public class Inventory : MonoBehaviour
     public void AddItem(GameObject item)
     {
         items.Add(item);
-        Debug.Log(item.GetComponent<ItemScript>().ItemName);
+        string itemName = item.GetComponent<ItemScript>().ItemName;
 
-
-        if (item.GetComponent<ItemScript>().ItemName.Equals("Sack Of Pebbles"))
+        if (itemName.Equals("Sack Of Pebbles"))
         {
             canSack.SetActive(true);
+        }
+
+        if (itemName.Equals("Key"))
+        {
+            canKey.SetActive(true);
         }
     }
 }
