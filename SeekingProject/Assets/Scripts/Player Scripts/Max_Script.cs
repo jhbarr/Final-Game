@@ -36,6 +36,8 @@ public class Max_Script : MonoBehaviour
     public float attackRange = 1f;
     public LayerMask enemyLayerMask;
 
+    public AudioSource chomp;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -161,5 +163,10 @@ public class Max_Script : MonoBehaviour
         {
             collider.GetComponent<AgentHealth>().takeDamage(25);
         }
+    }
+
+    public void playChompSound()
+    {
+        chomp.Play();
     }
 }
