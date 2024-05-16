@@ -6,6 +6,7 @@ public class Door_Script : MonoBehaviour
 {
     public Animator animator;
     public GameObject max;
+    public AudioSource creak;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -17,6 +18,7 @@ public class Door_Script : MonoBehaviour
             {
                 animator.SetBool("IsOpening", true);
                 iv.removeItem("Key");
+                creak.Play();
             }
         }
         
