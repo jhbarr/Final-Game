@@ -32355,9 +32355,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1440
-        y: 480
-        width: 32
-        height: 32
+        y: 448
+        width: 164
+        height: 64
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -44026,6 +44026,27 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: MainLev2.0_1830
+      rect:
+        serializedVersion: 2
+        x: 1356
+        y: 1054
+        width: 181
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3e9c62f5dd7536040a6982df63616c4a
+      internalID: -218886084
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -44962,6 +44983,7 @@ TextureImporter:
       MainLev2.0_1828: 21303656
       MainLev2.0_1829: 1478958059
       MainLev2.0_183: 21300366
+      MainLev2.0_1830: -218886084
       MainLev2.0_184: 21300368
       MainLev2.0_185: 21300370
       MainLev2.0_186: 21300372

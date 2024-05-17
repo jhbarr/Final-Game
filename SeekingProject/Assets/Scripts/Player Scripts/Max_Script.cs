@@ -11,6 +11,10 @@ public class Max_Script : MonoBehaviour
     public Animator animator;
     public SpriteRenderer sr;
 
+    public ParticleSystem ps;
+    public GameObject particleSystemObject;
+    ParticleSystem.EmissionModule emission;
+
     public Vector2 movement;
     private bool facingLeft;
 
@@ -131,6 +135,13 @@ public class Max_Script : MonoBehaviour
             }
         }
 
+        // ----- Splash attack --------//
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            splashAttack();
+        }
+
+
         if (biteCounter > 0)
         {
             biteCounter -= Time.deltaTime;
@@ -148,6 +159,26 @@ public class Max_Script : MonoBehaviour
         }
 
     }
+
+
+    private void splashAttack()
+    {
+        particleSystemObject.transform.position = gameObject.transform.position;
+
+        var em = ps.emission;
+        var dur = ps.duration;
+
+        ps.Play();
+        emission = ps.emission;
+        emission.enabled = true;
+        Invoke(nameof(stopParticles), dur);
+    }
+
+    private void stopParticles()
+    {
+        ps.Stop();
+    }
+
 
     private void attack()
     {

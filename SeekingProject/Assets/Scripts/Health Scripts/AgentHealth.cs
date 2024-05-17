@@ -83,7 +83,7 @@ public class AgentHealth : MonoBehaviour
             GameObject mm = GameObject.Find("MacroManager");
             MacroManagerScript mms = mm.GetComponent<MacroManagerScript>();
 
-            if (Random.value > 0.5f)
+            if (Random.value > 0.99f)
             {
                 mms.DropItem(gameObject.transform.position, SackOfPebbles);
             }
